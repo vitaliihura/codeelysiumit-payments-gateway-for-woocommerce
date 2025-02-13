@@ -1,0 +1,90 @@
+/* 
+ * .stax-overlay 
+ * This overlay covers the entire viewport to indicate that payment processing is in progress.
+ * It uses a semi-transparent black background and centers its content using flexbox.
+ */
+.stax-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+}
+
+/* 
+ * .stax-overlay svg 
+ * SVG icons within the overlay have a right margin and a continuous rotation animation.
+ */
+.stax-overlay svg {
+    margin-right: 5px;
+    animation: rotate 2s linear infinite;
+}
+
+/* 
+ * @keyframes rotate 
+ * Defines the rotation animation for the SVG icons.
+ */
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 
+ * .wc_payment_method.payment_method_stax > label 
+ * Styles the label element of the Stax payment method as a flex container.
+ * This aligns the content in a row with space distributed between elements.
+ */
+.wc_payment_method.payment_method_stax > label {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+/* 
+ * .wc_payment_method.payment_method_stax > label img 
+ * Ensures that images within the payment method label are sized correctly.
+ * The image will not exceed 50px in width, scales responsively, and maintains its aspect ratio.
+ */
+.wc_payment_method.payment_method_stax > label img {
+    max-width: 50px;
+    width: 100%;
+    object-fit: contain;
+}
+
+/* 
+ * #stax-card-number iframe, #stax-card-cvv iframe 
+ * Forces the iframes for card number and CVV fields to have a height of 45px.
+ */
+#stax-card-number iframe, #stax-card-cvv iframe {
+    height: 45px;
+}
+
+/* 
+ * .snax-month 
+ * Styles the month input container with a fixed width and a right margin.
+ */
+.snax-month {
+    width: 54px;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* 
+ * .snax-year 
+ * Styles the year input container with a fixed width and a left margin.
+ */
+.snax-year {
+    width: 70px;
+    display: inline-block;
+    margin-left: 5px;
+}

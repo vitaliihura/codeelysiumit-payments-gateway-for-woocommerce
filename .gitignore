@@ -1,0 +1,12 @@
+# WordPress core files
+wp-admin/
+wp-includes/
+
+# OS files
+.DS_Store
+.idea
+Thumbs.db
+
+# Dependencies
+node_modules/
+vendor/
