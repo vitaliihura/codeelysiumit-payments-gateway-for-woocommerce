@@ -211,7 +211,7 @@ function ceit_init_gateway_class()
         public function process_payment($order_id)
         {
             // Verify nonce to ensure the request is valid.
-            if (!isset($_POST['stax_nonce']) || !wp_verify_nonce(sanitize_key(wp_unslash($_POST['stax_nonce'])), 'stax_nonce')) {
+            if (!isset($_POST['stax_nonce']) || !wp_verify_nonce(sanitize_key(wp_unslash($_POST['stax_nonce'])), 'stax_payment_nonce')) {
                 // If nonce verification fails, add an error notice and mark payment as failed.
                 wc_add_notice(__('Payment error: Nonce verification failed.', 'codeelysiumit-payments-gateway-for-woocommerce'), 'error');
                 do_action('woocommerce_payment_failed', $order_id);
@@ -284,7 +284,7 @@ function ceit_init_gateway_class()
             wp_localize_script('stax-gateway', 'stax_params', array(
                 'web_payments_token' => $this->web_payments_token,
                 'ajax_url' => admin_url('admin-ajax.php'),
-                'stax_nonce' => wp_create_nonce('stax_nonce'),
+                'stax_nonce' => wp_create_nonce('stax_payment_nonce'),
                 'total' => $total,
                 'grand_total' => $grand_total,
                 'tax' => $tax,

@@ -35,6 +35,12 @@ jQuery(document).ready(function ($) {
             });
         });
 
+        // Remove any existing nonce from the checkout form to avoid duplication.
+        $('#stax_nonce').remove();
+
+        // Add the nonce input field to the checkout form for security verification in PHP.
+        $('form.checkout').append('<input type="hidden" name="stax_nonce" id="stax_nonce" value="' + stax_params.stax_nonce + '">');
+
         // Intercept click event on the "Place Order" button.
         $(document).on('click', '#place_order', function (e) {
             e.preventDefault();
@@ -85,6 +91,7 @@ jQuery(document).ready(function ($) {
                 url: 'https://app.staxpayments.com/#/bill/',
                 method: 'card',
                 validate: false,
+                stax_nonce: stax_params.stax_nonce,
                 meta: {
                     reference: orderNumber,
                     memo: note,
