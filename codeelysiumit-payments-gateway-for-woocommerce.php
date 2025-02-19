@@ -23,16 +23,16 @@ if (!defined('ABSPATH')) {
 /*
  * Define plugin constants.
  */
-if (!defined('CEIT_GATEWAY_VERSION')) {
-    define('CEIT_GATEWAY_VERSION', '1.0.0');
+if (!defined('CEITPGFW_VERSION')) {
+    define('CEITPGFW_VERSION', '1.0.0');
 }
 
-if (!defined('CEIT_GATEWAY_PLUGIN_DIR')) {
-    define('CEIT_GATEWAY_PLUGIN_DIR', plugin_dir_path(__FILE__));
+if (!defined('CEITPGFW_PLUGIN_DIR')) {
+    define('CEITPGFW_PLUGIN_DIR', plugin_dir_path(__FILE__));
 }
 
-if (!defined('CEIT_GATEWAY_PLUGIN_URL')) {
-    define('CEIT_GATEWAY_PLUGIN_URL', plugin_dir_url(__FILE__));
+if (!defined('CEITPGFW_PLUGIN_URL')) {
+    define('CEITPGFW_PLUGIN_URL', plugin_dir_url(__FILE__));
 }
 
 /**
@@ -41,18 +41,18 @@ if (!defined('CEIT_GATEWAY_PLUGIN_URL')) {
  * @param array $gateways List of available payment gateways.
  * @return array Modified list of payment gateways.
  */
-add_filter('woocommerce_payment_gateways', 'ceit_add_gateway_class');
-function ceit_add_gateway_class($gateways)
+add_filter('woocommerce_payment_gateways', 'ceitpgfw_add_gateway_class');
+function ceitpgfw_add_gateway_class($gateways)
 {
-    $gateways[] = 'WC_Gateway_Ceit_Stax';
+    $gateways[] = 'WC_Gateway_Ceitpgfw_Stax';
     return $gateways;
 }
 
 /**
  * Initialize the Stax gateway class after all plugins are loaded.
  */
-add_action('plugins_loaded', 'ceit_init_gateway_class');
-function ceit_init_gateway_class()
+add_action('plugins_loaded', 'ceitpgfw_init_gateway_class');
+function ceitpgfw_init_gateway_class()
 {
     // Ensure that the WooCommerce Payment Gateway class exists.
     if (!class_exists('WC_Payment_Gateway')) {
@@ -60,11 +60,11 @@ function ceit_init_gateway_class()
     }
 
     /**
-     * Class WC_Gateway_Ceit_Stax
+     * Class WC_Gateway_Ceitpgfw_Stax
      *
      * Implements the StaxPayments Gateway for WooCommerce.
      */
-    class WC_Gateway_Ceit_Stax extends WC_Payment_Gateway
+    class WC_Gateway_Ceitpgfw_Stax extends WC_Payment_Gateway
     {
 
         /**
@@ -256,9 +256,9 @@ function ceit_init_gateway_class()
                 return;
             }
 
-            wp_enqueue_style('stax-gateway-css', plugins_url('assets/css/stax-gateway.css', __FILE__), array(), CEIT_GATEWAY_VERSION, 'all');
-            wp_enqueue_script('stax-min', plugins_url('assets/js/stax.min.js', __FILE__), array('jquery'), CEIT_GATEWAY_VERSION, true);
-            wp_enqueue_script('stax-gateway', plugins_url('assets/js/stax-gateway.js', __FILE__), array('jquery', 'stax-min'), CEIT_GATEWAY_VERSION, true);
+            wp_enqueue_style('stax-gateway-css', plugins_url('assets/css/stax-gateway.css', __FILE__), array(), CEITPGFW_VERSION, 'all');
+            wp_enqueue_script('stax-min', plugins_url('assets/js/stax.min.js', __FILE__), array('jquery'), CEITPGFW_VERSION, true);
+            wp_enqueue_script('stax-gateway', plugins_url('assets/js/stax-gateway.js', __FILE__), array('jquery', 'stax-min'), CEITPGFW_VERSION, true);
 
             // Calculate cart totals.
             $cart_data = WC()->session->get('cart', array());
@@ -308,8 +308,8 @@ function ceit_init_gateway_class()
  * @param array $links Existing plugin action links.
  * @return array Modified plugin action links.
  */
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'ceit_gateway_settings_link');
-function ceit_gateway_settings_link($links)
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'ceitpgfw_gateway_settings_link');
+function ceitpgfw_gateway_settings_link($links)
 {
     $settings_link = '<a href="admin.php?page=wc-settings&tab=checkout&section=stax">' . esc_html__('Settings', 'codeelysiumit-payments-gateway-for-woocommerce') . '</a>';
     array_unshift($links, $settings_link);
